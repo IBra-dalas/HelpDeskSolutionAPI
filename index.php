@@ -40,6 +40,15 @@ try{
                     case "GetTicketEntreprise": 
                         $apicontroller -> GetTicketEntreprise($url[2]);
                     break;
+                    case "GetTicketbyusers": 
+                        $apicontroller -> GetTicketbyusers($url[2]);
+                    break;
+                    case "GetTicketbystatus": 
+                        $apicontroller -> GetTicketbystatus($url[2]);
+                    break; 
+                    case "ticket": 
+                        $apicontroller -> getticket($url[2]);
+                    break;
                     case "get_compte": 
                         $apicontroller -> getcompte($url[2]);
                     break;

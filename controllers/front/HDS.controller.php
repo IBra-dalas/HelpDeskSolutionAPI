@@ -10,6 +10,11 @@
         public function __construct(){
             $this->apimanager = new APIManager();
         }
+        public function getUser($iduser){  
+            $roles = $this->apimanager->getBdUser($iduser);
+             Json::sendJSON($roles);
+         }
+
         public function getRoles(){  
            $roles = $this->apimanager->getBdRoles();
             Json::sendJSON($roles);
@@ -26,22 +31,40 @@
             $create_ticket = $this->apimanager->createBDticket($title,$type,$target,$desc,$id);
             Json::sendJSON($create_ticket);
         }
+        
+        
+        public function GetTicketbystatus($idsociete){ 
+            $GetTicketEntreprise = $this->apimanager->GetBDTicketbystatus($idsociete);
+            Json::sendJSON($GetTicketEntreprise);
+        }
+
         public function GetTicketEntreprise($idsociete){ 
             $GetTicketEntreprise = $this->apimanager->getBDticketentreprise($idsociete);
             Json::sendJSON($GetTicketEntreprise);
         }
+
+        public function GetTicketbyusers($iduser){ 
+            $GetTicketEntreprise = $this->apimanager->getBDticketbyusers($iduser);
+            Json::sendJSON($GetTicketEntreprise);
+        }
+
+        public function getticket($idticket){ 
+            $GetTicketEntreprise = $this->apimanager->getBDticket($idticket);
+            Json::sendJSON($GetTicketEntreprise);
+        }
+
         public function getcompte($login){ 
             $get_compte = $this->apimanager->getBdUser($login);
             Json::sendJSON($get_compte);
         }
-        public function getReleveUser($releve_user){
-            $releve = $this->apimanager->getBDReleves($releve_user);
-            Json::sendJSON($releve);
-        }
-        public function getUser($user_sonde){
-            $sonde = $this->apimanager->getBDSonde($user_sonde);
-            Json::sendJSON($sonde);
-        }
+      //  public function getReleveUser($releve_user){
+      //      $releve = $this->apimanager->getBDReleves($releve_user);
+      //      Json::sendJSON($releve);
+     //   }
+       // public function getUser($user_sonde){
+       //     $sonde = $this->apimanager->getBDSonde($user_sonde);
+       //     Json::sendJSON($sonde);
+      //  }
         public function getStatus(){
             $status = $this->apimanager->getBdStatut();
             Json::sendJSON($status);

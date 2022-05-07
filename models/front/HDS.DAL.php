@@ -17,7 +17,7 @@ class APIManager extends Model {
     public function connectBDUser($login,$mdp){
         // $req = "SELECT * from sonde as sd inner join station as s on s.IDStation = sd.IDStation WHERE sd.IDstation = :user_sonde
         // ";
-        $req = "SELECT users.IDUSERS, users.login, users.password, users.IDSOCIETE, users.IDROLE
+        $req = "SELECT users.IDUSERS, users.login, users.password, users.IDSOCIETE, users.IDROLE, role.Privilege
         FROM `users` 
         INNER JOIN `societe` ON users.IDSOCIETE = societe.IDSOCIETE 
         INNER JOIN `role` ON users.IDROLE = role.IDROLE 
@@ -53,6 +53,37 @@ class APIManager extends Model {
         $stmt->closeCursor();
         return $lignesSonde;
     }
+
+    public function getBDticketbyusers($iduser){
+        $req = "SELECT * FROM `ticket` INNER JOIN `users` ON users.IDUSERS = ticket.IDUSERS INNER JOIN `societe` ON societe.IDSOCIETE = users.IDSOCIETE WHERE users.IDUSERS = $iduser";
+        $stmt = $this->getBdd()->prepare($req);
+        // $stmt->bindValue(":login",$login,":mdp",$mdp,PDO::PARAM_EVT_EXEC_POST);
+        $stmt->execute();
+        $lignesSonde = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        return $lignesSonde;
+    }
+
+     // 
+     public function GetBDTicketbystatus($idstatut){
+        $req = "SELECT * from `ticket` RIGHT JOIN `statut` ON statut.IDstatus = ticket.IDstatus WHERE ticket.IDstatus = $idstatut";
+        $stmt = $this->getBdd()->prepare($req);
+        $stmt->execute();
+         $Ticket = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        return $Ticket;
+    }
+
+    public function getBDticket($idticket){
+        $req = "SELECT * FROM `ticket` INNER JOIN `users` ON users.IDUSERS = ticket.IDUSERS INNER JOIN `societe` ON societe.IDSOCIETE = users.IDSOCIETE WHERE ticket.IDTICKETS = $idticket";
+        $stmt = $this->getBdd()->prepare($req);
+        // $stmt->bindValue(":login",$login,":mdp",$mdp,PDO::PARAM_EVT_EXEC_POST);
+        $stmt->execute();
+        $lignesSonde = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        return $lignesSonde;
+    }
+
     public function getBDUser($login){
         $req = "SELECT users.IDUSERS FROM `users` WHERE users.login = $login";
         $stmt = $this->getBdd()->prepare($req);
@@ -79,7 +110,8 @@ class APIManager extends Model {
         $stmt->closeCursor();
         return  $societe;
     }
-    // 
+   
+
     public function getBdTypeTicket(){
         $req = "SELECT *  from type_ticket";
         $stmt = $this->getBdd()->prepare($req);
